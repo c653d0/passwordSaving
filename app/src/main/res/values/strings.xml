@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">passwordsaving</string>
+    <string name="app_name">passwordSaving</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_name">label</string>
+    <string name="title_id">id</string>
 </resources>

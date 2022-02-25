@@ -11,11 +11,11 @@ import java.util.*
 import javax.crypto.Cipher
 import kotlin.collections.HashMap
 
-class RsaEncrypt {
+class RsaEncrypt : EncryptInterface{
     private val map = HashMap<String, String>()
 
 
-    public fun generateKey() {
+    public override fun generateKey() {
         //创建一个KeyPairGenerator对象用来创建密钥对
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         //初始化，设置密钥长度
@@ -29,16 +29,16 @@ class RsaEncrypt {
         map["private"] = Base64.getEncoder().encodeToString(privateKey.encoded)
     }
 
-    public fun getPublicKey(): String {
+    public override fun getDecryptionKey(): String {
         return map["public"]!!
     }
 
-    public fun getPrivateKey(): String {
+    public override fun getEncryptionKey(): String {
         return map["private"]!!
     }
 
-    public fun encrypt(text: String, publicKey: String): String {
-        val decode = Base64.getDecoder().decode(publicKey)
+    public override fun encrypt(text: String, EncryptionKey: String): String {
+        val decode = Base64.getDecoder().decode(EncryptionKey)
         val pubKey: RSAPublicKey =
             KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(decode)) as RSAPublicKey
 
@@ -49,10 +49,10 @@ class RsaEncrypt {
             .encodeToString(cipher.doFinal(text.toByteArray(charset = Charsets.UTF_8)))
     }
 
-    public fun decrypt(text: String, privateKey: String): String {
+    public override fun decrypt(text: String, DecryptionKey: String): String {
         val inputText = Base64.getDecoder().decode(text.toByteArray(charset = Charsets.UTF_8))
 
-        val decoded = Base64.getDecoder().decode(privateKey)
+        val decoded = Base64.getDecoder().decode(DecryptionKey)
         val priKey: RSAPrivateKey = KeyFactory.getInstance("RSA")
             .generatePrivate(PKCS8EncodedKeySpec(decoded)) as RSAPrivateKey
 

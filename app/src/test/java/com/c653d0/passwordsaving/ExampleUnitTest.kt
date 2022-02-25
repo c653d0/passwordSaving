@@ -1,5 +1,7 @@
 package com.c653d0.passwordsaving
 
+import com.c653d0.passwordsaving.tool.EncryptInterface
+import com.c653d0.passwordsaving.tool.RsaEncrypt
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,6 +14,17 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 22)
+        val encrypt:EncryptInterface = RsaEncrypt()
+        encrypt.generateKey()
+        val encryptionKey = encrypt.getEncryptionKey()
+        val decryptionKey = encrypt.getDecryptionKey()
+        print("theEncryptKeyIs:$encryptionKey")
+        print("theDecryptKeyIs:$decryptionKey")
+        val text = "hello,world!  ===  你好，世界！"
+        val encodeText = encrypt.encrypt(text, encryptionKey)
+        val decodeText = encrypt.encrypt(encodeText, decryptionKey)
+        print("beforeEncode:$text")
+        print("Encode:$encodeText")
+        print("Decode:$decodeText")
     }
 }
