@@ -10,10 +10,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
         app:cardMaxElevation="8dp"
@@ -24,7 +24,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/main_background">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline2"
@@ -34,12 +35,12 @@
                 app:layout_constraintGuide_percent="0.2" />
 
             <TextView
-                android:id="@+id/home_title_name"
+                android:id="@+id/home_title_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/title_name"
+                android:textColor="@color/content_title"
                 android:textSize="@dimen/title_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/home_title_id"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -51,31 +52,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_id"
+                android:textColor="@color/content_title"
                 android:textSize="@dimen/title_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/home_title_name"
-                app:layout_constraintTop_toBottomOf="@+id/home_title_name" />
+                app:layout_constraintStart_toStartOf="@+id/home_title_label"
+                app:layout_constraintTop_toBottomOf="@+id/home_title_label" />
 
             <TextView
-                android:id="@+id/home_content_name"
+                android:id="@+id/home_content_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/content_text"
                 android:textSize="@dimen/content_text_size"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/home_title_name"
+                app:layout_constraintBottom_toBottomOf="@+id/home_title_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toTopOf="@+id/home_title_name"
+                app:layout_constraintTop_toTopOf="@+id/home_title_label"
                 tools:text="TEST" />
 
             <TextView
                 android:id="@+id/home_content_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/content_text"
                 android:textSize="@dimen/content_text_size"
                 app:layout_constraintBottom_toBottomOf="@+id/home_title_id"
-                app:layout_constraintStart_toStartOf="@+id/home_content_name"
+                app:layout_constraintStart_toStartOf="@+id/home_content_label"
                 app:layout_constraintTop_toTopOf="@+id/home_title_id"
                 tools:text="TEST" />
 

@@ -29,12 +29,13 @@ class RsaEncrypt : EncryptInterface{
         map["private"] = Base64.getEncoder().encodeToString(privateKey.encoded)
     }
 
+    //获取解密密钥
     public override fun getDecryptionKey(): String {
-        return map["public"]!!
-    }
-
-    public override fun getEncryptionKey(): String {
         return map["private"]!!
+    }
+    //获取加密密钥
+    public override fun getEncryptionKey(): String {
+        return map["public"]!!
     }
 
     public override fun encrypt(text: String, EncryptionKey: String): String {

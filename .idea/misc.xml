@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
+        <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/fragment_detail_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/fragment_edit_content.xml" value="0.24947916666666667" />
+        <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/fragment_home.xml" value="0.24947916666666667" />
+        <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/fragment_menu.xml" value="0.24947916666666667" />
+        <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/fragment_show_content.xml" value="0.24947916666666667" />
         <entry key="..\:/Study/passwordsaving/app/src/main/res/layout/item_edit_content_card_view.xml" value="0.24947916666666667" />
+        <entry key="..\:/Study/passwordsaving/app/src/main/res/menu/bottom_bar_menu.xml" value="0.24947916666666667" />
       </map>
     </option>
   </component>
