@@ -3,6 +3,7 @@ package com.c653d0.passwordsaving.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "password_table")
 data class PasswordInfo(
@@ -16,5 +17,4 @@ data class PasswordInfo(
     val password:String,
     @ColumnInfo(name = "description")
     val description:String
-) {
-}
+) :Serializable

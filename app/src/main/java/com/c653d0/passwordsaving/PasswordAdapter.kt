@@ -1,5 +1,6 @@
 package com.c653d0.passwordsaving
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +35,9 @@ class PasswordAdapter : RecyclerView.Adapter<PasswordAdapter.PasswordViewHolder>
         holder.setContentId(password.uid)
 
         holder.itemView.setOnClickListener {
-            Toast.makeText(it.context,"id:${password.id}",Toast.LENGTH_SHORT).show()
-            it.findNavController().navigate(R.id.action_homeFragment_to_detailInfoFragment)
+            val bundle:Bundle = Bundle()
+            bundle.putSerializable("data",password)
+            it.findNavController().navigate(R.id.action_homeFragment_to_detailInfoFragment,bundle)
         }
     }
 

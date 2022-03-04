@@ -10,10 +10,12 @@
 
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
+    <string name="update_button">Update</string>
 
     <string name="missing_content_prompt">The input content is incomplete, please complete the content</string>
     <string name="add_successfully">add successfully</string>
     <string name="menu_page_generate_button">generate</string>
     <string name="menu_page_load_button">load</string>
     <string name="menu_page_key_tip">The current key is</string>
+    <string name="exceeds_limit">The password length exceeds the limit</string>
 </resources>

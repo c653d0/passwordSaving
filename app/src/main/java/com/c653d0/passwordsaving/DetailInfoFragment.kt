@@ -51,41 +51,92 @@ class DetailInfoFragment : Fragment() {
             PasswordViewModelFactory(requireActivity().application)
         }
 
-        //设置点击事件
-        detailPageSaveButton?.setOnClickListener {
-            val label:String = editContentLabel?.text.toString()
-            val uid:String = editContentId?.text.toString()
-            val passwordText:String = editContentPassword?.text.toString()
-            val description:String = editContentDescription?.text.toString()
+        var isEdit:Boolean = false
+        var dataIn:PasswordInfo? = null
 
+        arguments?.get("data").apply{
+            if(this!=null){
+                dataIn = this as PasswordInfo
+                isEdit = true
 
-            if("" == label || "" == uid || "" == passwordText){
-                Toast.makeText(requireContext(),requireContext().getString(R.string.missing_content_prompt).toString(),Toast.LENGTH_SHORT).show()
-            }else{
-                if(check(requireContext(),"key_rsa.pub")){
-                    //将密码进行加密
-                    val fileOperate = FileOperate()
-                    val publicKey = fileOperate.readFromFile(requireContext(),"key_rsa.pub")
-                    val encode:EncryptInterface = RsaEncrypt()
-                    val encodePassword = encode.encrypt(passwordText,publicKey)
-                    //存放数据到数据库
-                    val password:PasswordInfo = PasswordInfo(0,label,uid,encodePassword,description)
-                    viewModel.insert(password)
-                    Toast.makeText(requireContext(),requireContext().getString(R.string.add_successfully),Toast.LENGTH_SHORT).show()
-                    it.findNavController().navigateUp()
-                }else{
-                    Toast.makeText(requireContext(),"no",Toast.LENGTH_SHORT).show()
-                }
+                //将密码进行解密
+                val fileOperate = FileOperate()
+                val privateKey = fileOperate.readFromFile(requireContext(), "key_rsa")
+                val encode: EncryptInterface = RsaEncrypt()
+                val decryptPassword = encode.decrypt(dataIn!!.password, privateKey)
+
+                //将数据填充到对应的文本框内
+                editContentLabel?.setText(dataIn!!.label)
+                editContentId?.setText(dataIn!!.uid)
+                editContentPassword?.setText(decryptPassword)
+                editContentDescription?.setText(dataIn!!.description)
+
+                //更改保存按钮上的文字
+                detailPageSaveButton?.setText(R.string.update_button)
             }
         }
 
+        //设置保存按钮点击事件
+        detailPageSaveButton?.setOnClickListener {
+
+            //将文本框内的数据整合到data对象中
+            val data = saveData(dataIn?.id?:0)
+
+            //判断进行更新还是插入操作
+            data?.apply {
+                if(isEdit){
+                    viewModel.update(this)
+                }else{
+                    viewModel.insert(this)
+                }
+                //操作结束返回上一层界面
+                it.findNavController().navigateUp()
+            }
+        }
+
+        //取消按钮点击事件
         detailPageCancelButton?.setOnClickListener {
             it.findNavController().navigateUp()
         }
     }
 
+    //检查文件是否存在
     private fun check(context: Context, fileName: String):Boolean{
         val file = File(context.getExternalFilesDir("KEY")!!.path + "/$fileName")
         return file.exists()
+    }
+
+    //将数据保存到一个对象中
+    private fun saveData(id:Int):PasswordInfo?{
+        val label:String = editContentLabel?.text.toString()
+        val uid:String = editContentId?.text.toString()
+        val passwordText:String = editContentPassword?.text.toString()
+        val description:String = editContentDescription?.text.toString()
+
+        //判断数据是否为空，若为空提醒用户补充数据
+        if("" == label || "" == uid || "" == passwordText){
+            Toast.makeText(requireContext(),requireContext().getString(R.string.missing_content_prompt).toString(),Toast.LENGTH_SHORT).show()
+        }else{
+            //判断数据规范，若密码长度超过限制，不进行保存并提醒
+            if(passwordText.length>20){
+                Toast.makeText(requireContext(),requireContext().getText(R.string.exceeds_limit),Toast.LENGTH_SHORT).show()
+                return null
+            }
+
+            //对密钥文件进行检查，若存在进行加密存储，若不存在提醒当前没有密钥
+            if(check(requireContext(),"key_rsa.pub")) {
+                //将密码进行加密
+                val fileOperate = FileOperate()
+                val publicKey = fileOperate.readFromFile(requireContext(), "key_rsa.pub")
+                val encode: EncryptInterface = RsaEncrypt()
+                val encodePassword = encode.encrypt(passwordText, publicKey)
+                //返回加密后的数据对象
+                return PasswordInfo(id, label, uid, encodePassword, description)
+            }else{
+                Toast.makeText(requireContext(),"NoKey",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return null
     }
 }
