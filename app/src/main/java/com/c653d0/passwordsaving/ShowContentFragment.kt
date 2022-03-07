@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.c653d0.passwordsaving.tool.ItemTouchHelperCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ShowContentFragment : Fragment() {
@@ -37,14 +39,20 @@ class ShowContentFragment : Fragment() {
             PasswordViewModelFactory(requireActivity().application)
         }
         val adapter = PasswordAdapter()
+        val callback = ItemTouchHelperCallback()
+        callback.setViewModel(viewModel)
+        val itemTouchHelper = ItemTouchHelper(callback)
 
         recyclerView?.apply {
             this.adapter = adapter
             this.layoutManager = LinearLayoutManager(requireContext())
         }
 
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
         viewModel.getAllPassWord().observe(this, Observer {
             adapter.setData(it)
+            callback.setList(it)
             adapter.notifyDataSetChanged()
         })
 
